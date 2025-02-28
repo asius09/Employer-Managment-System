@@ -1,26 +1,51 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
+import { useAuth } from "../../Context";
+import { useNavigate } from "react-router";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [passwordValue, setPasswordValue] = useState("");
-  const [employeeIdValue, setEmployeeIdValue] = useState("");
-  const [shouldRememberUser, setShouldRememberUser] = useState(false);
+  const [credentials, setCredentials] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
+  const { authenticateUser, isLoading, authState, setAuthState } = useAuth();
 
-  const handleEmployeeIdChange = (value) => setEmployeeIdValue(value);
-  const handlePasswordChange = (value) => setPasswordValue(value);
-  const toggleRememberUser = () => setShouldRememberUser((prev) => !prev);
-  const togglePasswordVisibility = () =>
-    setIsPasswordVisible(!isPasswordVisible);
+  const handleInputChange = useCallback(
+    (field) => (value) => {
+      setCredentials((prev) => ({ ...prev, [field]: value }));
+    },
+    []
+  );
 
-  const handleFormSubmission = (event) => {
+  const togglePasswordVisibility = useCallback(() => {
+    setIsPasswordVisible((prev) => !prev);
+  }, []);
+
+  const toggleRememberUser = useCallback(() => {
+    setCredentials((prev) => ({ ...prev, rememberMe: !prev.rememberMe }));
+  }, []);
+
+  const handleLogin = (event) => {
     event.preventDefault();
-    console.log("Form submitted with:", {
-      employeeId: employeeIdValue,
-      password: passwordValue,
-      rememberMe: shouldRememberUser,
-    });
+    setCredentials((prev) => ({ ...prev }));
+    if (credentials.email && credentials.password)
+      authenticateUser(credentials);
   };
-
+  useEffect(() => {
+    if (authState.user?.role) {
+      setTimeout(
+        () =>
+          navigate(
+            authState.user.role === "admin"
+              ? "/admin"
+              : `/employee/${authState.user.username}`
+          ),
+        500
+      );
+    }
+  }, [authState.user]);
   return (
     <div className="flex items-center justify-center min-h-screen bg-[var(--page-bg)] p-4">
       <div className="w-full max-w-md p-8 space-y-8 rounded-xl shadow-2xl bg-[var(--container-bg)] border border-[var(--border)] transform transition-all">
@@ -33,25 +58,21 @@ const LoginForm = () => {
             Enter your employee credentials to access the system
           </p>
         </div>
-        <form
-          className="space-y-6"
-          autoComplete="off"
-          onSubmit={handleFormSubmission}
-        >
+        <form className="space-y-6" autoComplete="off" onSubmit={handleLogin}>
           <div className="space-y-2">
             <label
-              htmlFor="employeeId"
+              htmlFor="email"
               className="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2"
             >
-              <i className="ri-user-3-line text-lg text-[var(--btn-primary-bg)]"></i>
-              Employee ID
+              <i className="ri-mail-line text-lg text-[var(--btn-primary-bg)]"></i>
+              Email
             </label>
             <input
-              type="text"
-              id="employeeId"
-              onChange={(e) => handleEmployeeIdChange(e.target.value)}
+              type="email"
+              id="email"
+              onChange={(e) => handleInputChange("email")(e.target.value)}
               className="w-full px-4 py-3 mt-1 border rounded-lg bg-[var(--input-bg)] border-[var(--input-border)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary-bg)] focus:border-transparent transition-all"
-              placeholder="Enter your employee ID"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -65,7 +86,7 @@ const LoginForm = () => {
             </label>
             <div className="relative">
               <input
-                onChange={(e) => handlePasswordChange(e.target.value)}
+                onChange={(e) => handleInputChange("password")(e.target.value)}
                 type={isPasswordVisible ? "text" : "password"}
                 id="password"
                 className="w-full px-4 py-3 mt-1 border rounded-lg bg-[var(--input-bg)] border-[var(--input-border)] text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--btn-primary-bg)] focus:border-transparent transition-all"
@@ -76,12 +97,17 @@ const LoginForm = () => {
                 type="button"
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-[var(--text-secondary)] hover:text-[var(--btn-primary-bg)] transition-colors"
+                disabled={isLoading}
               >
-                <i
-                  className={`ri-eye${
-                    isPasswordVisible ? "-line" : "-off-line"
-                  } text-lg cursor-pointer`}
-                ></i>
+                {isLoading ? (
+                  <i className="ri-loader-4-line text-lg animate-spin"></i>
+                ) : (
+                  <i
+                    className={`ri-eye${
+                      isPasswordVisible ? "-line" : "-off-line"
+                    } text-lg cursor-pointer`}
+                  ></i>
+                )}
               </button>
             </div>
           </div>
@@ -90,7 +116,7 @@ const LoginForm = () => {
               <input
                 type="checkbox"
                 id="rememberMe"
-                checked={shouldRememberUser}
+                checked={credentials.rememberMe}
                 onChange={toggleRememberUser}
                 className="hidden"
               />
@@ -100,7 +126,7 @@ const LoginForm = () => {
               >
                 <i
                   className={`ri-checkbox-circle-${
-                    shouldRememberUser ? "fill" : "line"
+                    credentials.rememberMe ? "fill" : "line"
                   } text-lg text-[var(--btn-primary-bg)] cursor-pointer`}
                 ></i>
                 Remember Me
@@ -114,12 +140,35 @@ const LoginForm = () => {
               Forgot Password?
             </button>
           </div>
+
+          {authState.loginStatus && (
+            <div
+              id="login-message"
+              className={`w-full text-center ${
+                authState.loginStatus === "success"
+                  ? "text-[var(--success)]"
+                  : "text-[var(--error)]"
+              }`}
+            >
+              {authState.loginStatus === "success"
+                ? "Login Successful!"
+                : authState.errorMessage}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full px-4 py-3 font-semibold text-white rounded-lg bg-[var(--btn-primary-bg)] hover:bg-[var(--btn-primary-hover)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[var(--btn-primary-bg)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
+            className="w-full px-4 py-3 font-semibold text-white rounded-lg bg-[var(--btn-primary-bg)] hover:bg-[var(--btn-primary-hover)] transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3"
+            disabled={isLoading}
           >
-            <i className="ri-login-box-line text-xl"></i>
-            Login
+            {isLoading ? (
+              <i className="ri-loader-4-line text-xl animate-spin"></i>
+            ) : (
+              <>
+                <i className="ri-login-box-line text-xl"></i>
+                Login
+              </>
+            )}
           </button>
         </form>
         <div className="mt-6 text-center">

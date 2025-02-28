@@ -2,12 +2,21 @@ import React, { useState } from "react";
 import TaskList from "../TaskList/TaskList";
 import PostNewTask from "../TaskList/PostNewTask";
 import { useTheme } from "../../Context/ThemeContext";
+import { useNavigate } from "react-router";
+import { useAuth } from "../../Context";
 
 const AdminDashboard = () => {
-  const { theme, handleThemeToggle } = useTheme;
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const { theme, handleThemeToggle } = useTheme();
   const [isPostNewTaskOpen, setIsPostNewTaskOpen] = useState(false);
   const togglePostNewTask = () => {
     setIsPostNewTaskOpen((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
   };
   return (
     <div className="min-h-screen bg-[var(--page-bg)] p-6">
@@ -25,7 +34,7 @@ const AdminDashboard = () => {
           <div className="flex gap-3 mt-4 md:mt-0">
             <button
               onClick={handleThemeToggle}
-              className="fixed top-4 right-4 px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-[var(--text-primary)] hover:bg-[var(--btn-primary-hover)] transition-colors duration-200 shadow-md"
+              className="h-10 w-10 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]"
             >
               <i
                 className={`ri-${
@@ -33,13 +42,16 @@ const AdminDashboard = () => {
                 } text-lg`}
               ></i>
             </button>
-            <button className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-white hover:bg-[var(--btn-primary-hover)] transition-colors duration-200 flex items-center gap-2 cursor-pointer">
+            <button className="h-10 px-4 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]">
               <i className="ri-settings-3-line"></i>
-              Settings
+              <span className="ml-2">Settings</span>
             </button>
-            <button className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-white hover:bg-[var(--btn-primary-hover)] transition-colors duration-200 flex items-center gap-2 cursor-pointer">
+            <button
+              onClick={handleLogout}
+              className="h-10 px-4 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]"
+            >
               <i className="ri-logout-box-r-line"></i>
-              Log Out
+              <span className="ml-2">Log Out</span>
             </button>
           </div>
         </div>
@@ -61,7 +73,7 @@ const AdminDashboard = () => {
         </div>
 
         <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--btn-accent-bg)]">
-          <h3 className="text-lg font-semibold text[var(--text-primary)] mb-4">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Active Tasks
           </h3>
           <div className="text-4xl font-bold text-[var(--btn-accent-bg)]">
@@ -83,11 +95,11 @@ const AdminDashboard = () => {
         </div>
 
         <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--error)]">
-          <h3 className="text-lg font-semibold text[var(--text-primary)] mb-4">
+          <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Pending Reviews
           </h3>
-          <div className="text-4xl font-bold text[var(--error)]">12</div>
-          <p className="text-sm text[var(--text-secondary)] mt-2">
+          <div className="text-4xl font-bold text-[var(--error)]">12</div>
+          <p className="text-sm text-[var(--text-secondary)] mt-2">
             Performance reviews pending
           </p>
         </div>

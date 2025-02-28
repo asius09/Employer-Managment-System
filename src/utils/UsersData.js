@@ -1,9 +1,9 @@
-export const loginData = {
+export const UsersData = {
   employees: [
     {
       id: "emp1",
       email: "emp1@example.com",
-      password: "asius@20229",
+      password: "123",
       fullName: "John Doe",
       tasks: [
         {
@@ -35,7 +35,7 @@ export const loginData = {
     {
       id: "emp2",
       email: "emp2@example.com",
-      password: "asius@20229",
+      password: "123",
       fullName: "Jane Smith",
       tasks: [
         {
@@ -67,7 +67,7 @@ export const loginData = {
     {
       id: "emp3",
       email: "emp3@example.com",
-      password: "asius@20229",
+      password: "123",
       fullName: "Alice Johnson",
       tasks: [
         {
@@ -87,7 +87,7 @@ export const loginData = {
     {
       id: "emp4",
       email: "emp4@example.com",
-      password: "asius@20229",
+      password: "123",
       fullName: "Bob Brown",
       tasks: [
         {
@@ -107,7 +107,7 @@ export const loginData = {
     {
       id: "emp5",
       email: "emp5@example.com",
-      password: "asius@20229",
+      password: "123",
       fullName: "Charlie Davis",
       tasks: [
         {
@@ -127,8 +127,8 @@ export const loginData = {
   ],
   admin: {
     id: "admin1",
-    email: "admin@example.com",
-    password: "asius@20229",
+    email: "admin@1",
+    password: "123",
     fullName: "Admin User",
     tasks: [
       {
@@ -183,4 +183,4 @@ export const loginData = {
   },
 };
 
-export default loginData;
+export default UsersData;

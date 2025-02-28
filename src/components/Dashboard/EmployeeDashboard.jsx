@@ -2,6 +2,7 @@ import React from "react";
 import TaskList from "../TaskList/TaskList";
 import { useParams } from "react-router";
 import { useTheme } from "../../Context/ThemeContext";
+import { Link } from "react-router";
 
 const EmployeeDashboard = () => {
   const { theme, handleThemeToggle } = useTheme();
@@ -19,10 +20,10 @@ const EmployeeDashboard = () => {
               Logged in since: 8:00 AM | Total hours today: 4.5 hrs
             </p>
           </div>
-          <div className="flex gap-3 mt-4 md:mt-0">
+          <div className="flex gap-3 mt-4 md:mt-0 items-center">
             <button
               onClick={handleThemeToggle}
-              className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-white hover:bg-[var(--btn-primary-hover)] transition-colors duration-200 flex items-center gap-2 cursor-pointer"
+              className="h-10 w-10 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]"
             >
               <i
                 className={`ri-${
@@ -30,10 +31,12 @@ const EmployeeDashboard = () => {
                 } text-lg`}
               ></i>
             </button>
-            <button className="px-4 py-2 rounded-lg bg-[var(--btn-primary-bg)] text-white hover:bg-[var(--btn-primary-hover)] transition-colors duration-200 flex items-center gap-2 cursor-pointer">
-              <i className="ri-logout-box-r-line"></i>
-              Log Out
-            </button>
+            <Link to={"/login"}>
+              <button className="h-10 px-4 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]">
+                <i className="ri-logout-box-r-line"></i>
+                <span className="ml-2">Log Out</span>
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -41,7 +44,7 @@ const EmployeeDashboard = () => {
       {/* Task Overview Section */}
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Task Overview Cards */}
-        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--btn-primary-bg)]">
+        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200 border-l-4 border-[var(--btn-primary-bg)]">
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             New Tasks
           </h3>
@@ -53,7 +56,7 @@ const EmployeeDashboard = () => {
           </p>
         </div>
 
-        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--btn-accent-bg)]">
+        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200 border-l-4 border-[var(--btn-accent-bg)]">
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Completed Tasks
           </h3>
@@ -65,7 +68,7 @@ const EmployeeDashboard = () => {
           </p>
         </div>
 
-        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--info)]">
+        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200 border-l-4 border-[var(--info)]">
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Accepted Tasks
           </h3>
@@ -75,7 +78,7 @@ const EmployeeDashboard = () => {
           </p>
         </div>
 
-        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg border-l-4 border-[var(--error)]">
+        <div className="bg-[var(--container-bg)] p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200 border-l-4 border-[var(--error)]">
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Failed Tasks
           </h3>
