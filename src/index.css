@@ -1,1 +1,94 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@layer base {
+  :root {
+    /* // Background colors */
+    --page-bg: theme("colors.slate.50");
+    --container-bg: theme("colors.white");
+    --nested-container-bg: theme("colors.slate.100");
+
+    /* // Text colors */
+    --text-primary: theme("colors.slate.900");
+    --text-secondary: theme("colors.slate.700");
+    --text-muted: theme("colors.slate.500");
+
+    /* // Button colors */
+    --btn-primary-bg: theme("colors.indigo.500");
+    --btn-primary-hover: theme("colors.indigo.600");
+    --btn-secondary-bg: theme("colors.slate.700");
+    --btn-secondary-hover: theme("colors.slate.600");
+    --btn-accent-bg: theme("colors.teal.400");
+    --btn-accent-hover: theme("colors.teal.500");
+    --btn-disabled: theme("colors.slate.600");
+
+    /* // Input colors */
+    --input-bg: theme("colors.white");
+    --input-border: theme("colors.slate.300");
+    --input-placeholder: theme("colors.slate.400");
+
+    /* // Status colors */
+    --success: theme("colors.emerald.500");
+    --warning: theme("colors.amber.500");
+    --error: theme("colors.rose.500");
+    --info: theme("colors.sky.500");
+
+    /* // UI elements */
+    --border: theme("colors.slate.200");
+    --divider: theme("colors.slate.200");
+    --active-nav: theme("colors.indigo.500");
+    --highlight: theme("colors.amber.100");
+  }
+
+  .dark {
+    /* // Background colors */
+    --page-bg: theme("colors.slate.950");
+    --container-bg: theme("colors.slate.800");
+    --nested-container-bg: theme("colors.slate.700");
+
+    /* // Text colors */
+    --text-primary: theme("colors.slate.50");
+    --text-secondary: theme("colors.slate.300");
+    --text-muted: theme("colors.slate.400");
+
+    /* // Button colors */
+    --btn-primary-bg: theme("colors.indigo.500");
+    --btn-primary-hover: theme("colors.indigo.600");
+    --btn-secondary-bg: theme("colors.slate.700");
+    --btn-secondary-hover: theme("colors.slate.600");
+    --btn-accent-bg: theme("colors.teal.400");
+    --btn-accent-hover: theme("colors.teal.500");
+    --btn-disabled: theme("colors.slate.600");
+
+    /* // Input colors */
+    --input-bg: theme("colors.slate.800");
+    --input-border: theme("colors.slate.600");
+    --input-placeholder: theme("colors.slate.500");
+
+    /* // UI elements */
+    --border: theme("colors.slate.600");
+    --divider: theme("colors.slate.700");
+    --active-nav: theme("colors.indigo.400");
+    --highlight: theme("colors.amber.900");
+  }
+}
+/* Hide date picker icon but keep functionality */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Hide number input spinner but keep functionality */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+

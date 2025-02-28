@@ -1,9 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+import { useTheme } from "./Context/ThemeContext";
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return <>Hello</>;
+  const { handleThemeToggle, theme } = useTheme();
+  useEffect(() => {
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(theme);
+  }, [theme]);
+  return (
+    <>
+      <Outlet />
+    </>
+  );
 }
 
 export default App;
