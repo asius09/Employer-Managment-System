@@ -36,7 +36,7 @@ const AcceptTask = ({ task }) => {
     const day = Math.floor(Math.random() * 10);
     const updateTask = {
       ...task,
-      status: "failed", // Changed from "completed" to "failed"
+      status: "failed",
       accepted: false,
       failed: true,
       dueDate: day,

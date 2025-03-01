@@ -25,7 +25,7 @@ const NewTask = ({ task }) => {
         taskCounts: {
           ...prev.user.taskCounts,
           new: Math.max(0, prev.user.taskCounts.new - 1),
-          completed: prev.user.taskCounts.completed + 1,
+          accepted: prev.user.taskCounts.accepted + 1,
         },
       },
     }));
