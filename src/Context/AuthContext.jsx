@@ -6,12 +6,15 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [authState, setAuthState] = useLocalStorage("authState", {
-    isAuthenticated: false,
-    user: null,
-    loginStatus: null,
-    errorMessage: null,
-  });
+  const [authState, setAuthState, clearAuthState] = useLocalStorage(
+    "authState",
+    {
+      isAuthenticated: false,
+      user: null,
+      loginStatus: null,
+      errorMessage: null,
+    }
+  );
 
   const authenticateUser = useCallback(
     async (credentials) => {
@@ -25,6 +28,7 @@ export const AuthProvider = ({ children }) => {
 
         const { email, password } = credentials;
         const { admin, employees } = UsersData;
+
         if (email === admin?.email) {
           if (password === admin.password) {
             setAuthState({
@@ -44,7 +48,6 @@ export const AuthProvider = ({ children }) => {
           return;
         }
 
-        // Check employee credentials
         const employee = employees.find(
           (emp) => emp.email === email && emp.password === password
         );
@@ -80,14 +83,8 @@ export const AuthProvider = ({ children }) => {
   );
 
   const logout = useCallback(() => {
-    setAuthState({
-      isAuthenticated: false,
-      user: null,
-      loginStatus: null,
-      errorMessage: null,
-    });
-    localStorage.removeItem("authState");
-  }, [setAuthState]);
+    clearAuthState();
+  }, [clearAuthState]);
 
   return (
     <AuthContext.Provider
