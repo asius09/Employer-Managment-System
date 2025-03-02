@@ -10,7 +10,12 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { LoginForm, EmployeeDashboard, AdminDashboard } from "./components";
+import {
+  LoginForm,
+  EmployeeDashboard,
+  AdminDashboard,
+  PostNewTask,
+} from "./components";
 import { ThemeProvider, AuthProvider } from "./Context";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 
@@ -34,7 +39,16 @@ const router = createBrowserRouter(
             <AdminDashboard />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route
+          path="/admin/post-new-task"
+          element={
+            <ProtectedRoute>
+              <PostNewTask />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
     </Route>
   )
 );

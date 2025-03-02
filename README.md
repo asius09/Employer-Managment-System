@@ -1,6 +1,6 @@
-# TaskFlow Pro - Simple Task Management System
+# TaskFlow Pro - Advanced Task Management System
 
-Welcome to **TaskFlow Pro**, a straightforward task management solution designed to help teams stay organized and productive. Built with modern web technologies, this system provides an easy-to-use experience for both administrators and users.
+Welcome to **TaskFlow Pro**, a comprehensive task management solution designed to help teams stay organized and productive. Built with modern web technologies, this system provides an easy-to-use experience for both administrators and users with enhanced task creation capabilities.
 
 ---
 
@@ -34,9 +34,11 @@ Welcome to **TaskFlow Pro**, a straightforward task management solution designed
   - See priority tasks
 - **Admin Features**:
   - Create, edit, and delete tasks
+  - Post new tasks with detailed information
   - Reassign tasks
   - View team progress
   - Generate basic reports
+  - Task validation and error handling
 
 ### 🎛️ System Features
 
@@ -45,6 +47,7 @@ Welcome to **TaskFlow Pro**, a straightforward task management solution designed
 - Task status updates
 - Error handling
 - Performance optimization
+- Form validation for new task creation
 
 ---
 
@@ -58,6 +61,8 @@ Welcome to **TaskFlow Pro**, a straightforward task management solution designed
 | **Employee Dashboard (Light)** | ![Employee Light Mode](</public/employeePage(ligth).png>) |
 | **Login Page**                 | ![Login Dark Mode](/public/loginPage.png)                 |
 | **Login Page (Light)**         | ![Login Light Mode](</public/loginPage(ligth).png>)       |
+| **Post New Task**              | ![Post New Task](/public/post-new-task.png)               |
+| **Task Validation**            | ![Task Validation](/public/post-new-task-validation.png)  |
 
 ---
 
@@ -86,8 +91,14 @@ Welcome to **TaskFlow Pro**, a straightforward task management solution designed
 
 1. **Login**: Use your credentials to log in as an admin or employee.
 2. **Dashboard**: View your tasks and their statuses.
-3. **Task Management**: Accept, reject, complete, or fail tasks based on your role.
+3. **Task Management**:
+   - For Admins: Create new tasks with detailed information
+   - For Users: Accept, reject, complete, or fail tasks
 4. **Theme Toggle**: Switch between light and dark modes.
+5. **New Task Creation**:
+   - Navigate to Post New Task
+   - Fill in all required fields
+   - Submit the task for assignment
 
 ---
 
@@ -100,6 +111,7 @@ Welcome to **TaskFlow Pro**, a straightforward task management solution designed
 | **Routing**          | React Router v6                     |
 | **Storage**          | LocalStorage, SessionStorage        |
 | **Build Tools**      | Vite, ESLint, Prettier              |
+| **Form Handling**    | Custom validation, useLocalStorage  |
 
 ---
 
