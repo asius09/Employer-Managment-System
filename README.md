@@ -70,7 +70,7 @@ Welcome to **TaskFlow Pro**, a comprehensive task management solution designed t
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/taskflow-pro.git
+   git clone https://github.com/asius09/taskflow-pro.git
    ```
 2. Navigate to the project directory:
    ```bash
