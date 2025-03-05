@@ -40,7 +40,7 @@ const LoginForm = () => {
           navigate(
             authState.user.role === "admin"
               ? "/admin"
-              : `/employee/${authState.user.username}`
+              : `/employee/${authState.user.fullName}`
           ),
         500
       );
@@ -58,7 +58,7 @@ const LoginForm = () => {
             Enter your employee credentials to access the system
           </p>
         </div>
-        <form className="space-y-6" autoComplete="off" onSubmit={handleLogin}>
+        <form className="space-y-6" onSubmit={handleLogin}>
           <div className="space-y-2">
             <label
               htmlFor="email"

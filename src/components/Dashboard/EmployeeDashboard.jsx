@@ -1,12 +1,20 @@
 import React from "react";
-import TaskList from "../TaskList/TaskList";
-import { useParams } from "react-router";
+import TaskList from "../Tasks/TaskList";
 import { useTheme } from "../../Context/ThemeContext";
-import { Link } from "react-router";
+import { useAuth } from "../../Context";
+import { useNavigate } from "react-router";
 
 const EmployeeDashboard = () => {
+  const { logout, authState } = useAuth();
+  const user = authState.user?.role === "admin" ? null : authState.user;
+  const taskCounts = user.taskCounts;
+  const navigate = useNavigate();
   const { theme, handleThemeToggle } = useTheme();
-  const { username } = useParams();
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+
   return (
     <div className="min-h-screen bg-[var(--page-bg)] p-6">
       {/* Header Section */}
@@ -14,7 +22,7 @@ const EmployeeDashboard = () => {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
           <div>
             <h1 className="text-2xl font-bold text-[var(--text-primary)]">
-              Good Morning, {username}
+              Good Morning, {user.fullName}
             </h1>
             <p className="text-sm text-[var(--text-secondary)]">
               Logged in since: 8:00 AM | Total hours today: 4.5 hrs
@@ -31,12 +39,13 @@ const EmployeeDashboard = () => {
                 } text-lg`}
               ></i>
             </button>
-            <Link to={"/login"}>
-              <button className="h-10 px-4 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]">
-                <i className="ri-logout-box-r-line"></i>
-                <span className="ml-2">Log Out</span>
-              </button>
-            </Link>
+            <button
+              onClick={handleLogout}
+              className="h-10 px-4 flex items-center justify-center rounded-full bg-[var(--container-bg)] text-[var(--text-primary)] hover:bg-[var(--nested-container-bg)] transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md border border-[var(--input-border)]"
+            >
+              <i className="ri-logout-box-r-line"></i>
+              <span className="ml-2">Log Out</span>
+            </button>
           </div>
         </div>
       </div>
@@ -49,7 +58,7 @@ const EmployeeDashboard = () => {
             New Tasks
           </h3>
           <div className="text-4xl font-bold text-[var(--btn-primary-bg)]">
-            12
+            {taskCounts.new}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mt-2">
             Tasks awaiting action
@@ -61,7 +70,7 @@ const EmployeeDashboard = () => {
             Completed Tasks
           </h3>
           <div className="text-4xl font-bold text-[var(--btn-accent-bg)]">
-            45
+            {taskCounts.completed}
           </div>
           <p className="text-sm text-[var(--text-secondary)] mt-2">
             Tasks successfully completed
@@ -72,7 +81,9 @@ const EmployeeDashboard = () => {
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Accepted Tasks
           </h3>
-          <div className="text-4xl font-bold text-[var(--info)]">23</div>
+          <div className="text-4xl font-bold text-[var(--info)]">
+            {taskCounts.accepted}
+          </div>
           <p className="text-sm text-[var(--text-secondary)] mt-2">
             Tasks in progress
           </p>
@@ -82,7 +93,9 @@ const EmployeeDashboard = () => {
           <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
             Failed Tasks
           </h3>
-          <div className="text-4xl font-bold text-[var(--error)]">3</div>
+          <div className="text-4xl font-bold text-[var(--error)]">
+            {taskCounts.failed}
+          </div>
           <p className="text-sm text-[var(--text-secondary)] mt-2">
             Tasks that couldn't be completed
           </p>
@@ -91,7 +104,7 @@ const EmployeeDashboard = () => {
 
       {/* Task Details Section */}
       <div className="max-w-7xl mx-auto mt-8">
-        <TaskList />
+        <TaskList tasks={user.tasks} />
       </div>
     </div>
   );

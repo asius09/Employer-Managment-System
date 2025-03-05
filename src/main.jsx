@@ -10,9 +10,15 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
-import { LoginForm, EmployeeDashboard, AdminDashboard } from "./components";
-import { ThemeProvider } from "./Context/ThemeContext.jsx";
-import { AuthProvider } from "./Context/AuthContext.jsx";
+import {
+  LoginForm,
+  EmployeeDashboard,
+  AdminDashboard,
+  PostNewTask,
+  EditTask,
+  ViewTask,
+} from "./components";
+import { ThemeProvider, AuthProvider } from "./Context";
 import ProtectedRoute from "./utils/ProtectedRoute.jsx";
 
 const router = createBrowserRouter(
@@ -21,7 +27,7 @@ const router = createBrowserRouter(
       <Route index element={<Navigate to="/login" replace />} />
       <Route path="login" element={<LoginForm />} />
       <Route
-        path="employee/:username"
+        path="employee/:fullName"
         element={
           <ProtectedRoute>
             <EmployeeDashboard />
@@ -35,7 +41,32 @@ const router = createBrowserRouter(
             <AdminDashboard />
           </ProtectedRoute>
         }
-      />
+      >
+        <Route
+          path="/admin/post-new-task"
+          element={
+            <ProtectedRoute>
+              <PostNewTask />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/edittask/:id"
+          element={
+            <ProtectedRoute>
+              <EditTask />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/viewtask/:id"
+          element={
+            <ProtectedRoute>
+              <ViewTask />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
     </Route>
   )
 );

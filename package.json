@@ -1,5 +1,5 @@
 {
-  "name": "employ-managment-system",
+  "name": "taskflow-pro",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,7 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/material": "^6.4.6",
+    "@mui/x-date-pickers": "^7.27.1",
     "@tailwindcss/vite": "^4.0.9",
+    "dayjs": "^1.11.13",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router": "^7.2.0",

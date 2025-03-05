@@ -4,7 +4,7 @@ export default function useLocalStorage(key, defaultValue) {
   const [value, setValue] = useState(() => {
     try {
       const storedValue = localStorage.getItem(key);
-      return storedValue !== null ? JSON.parse(storedValue) : defaultValue;
+      return storedValue ? JSON.parse(storedValue) : defaultValue;
     } catch (error) {
       console.error("Error reading from localStorage:", error);
       return defaultValue;
@@ -12,12 +12,11 @@ export default function useLocalStorage(key, defaultValue) {
   });
 
   useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {
-      console.error("Error writing to localStorage:", error);
-    }
+    if (value) localStorage.setItem(key, JSON.stringify(value));
   }, [key, value]);
-
-  return [value, setValue];
+  const clearValue = () => {
+    localStorage.removeItem(key);
+    setValue(defaultValue);
+  };
+  return [value, setValue, clearValue];
 }
